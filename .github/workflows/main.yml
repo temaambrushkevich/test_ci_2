@@ -47,8 +47,12 @@ jobs:
         run: |
           echo "Testing calc..."
           curl -o output.txt "http://31.184.253.55:5000/calc?arg1=10&arg2=7&operation=mult"
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           path: output.txt
+          name: out_curl
+      - name: Get Artifact
+        uses: actions/download-artifact@v3
+        with:
           name: out_curl
