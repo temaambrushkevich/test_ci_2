@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script:
-            "docker run -d -p 5000:5000 --name calc_flask_server artemambrush/calc_flask"
+            "docker run -d -p 5000:5000 --name ${{ secrets.DOCKER_CONTAINER_NAME }} artemambrush/calc_flask"
 
   test:
     needs: deploy
@@ -53,6 +53,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out_curl
+  stop_containers:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
       - name: login in host and stoping docker container
         uses: appleboy/ssh-action@master
         with:
@@ -60,4 +64,4 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script:
-            "docker stop calc_flask_server"
+            "docker stop ${{ secrets.DOCKER_CONTAINER_NAME }}; docker system prune -a; exit"
