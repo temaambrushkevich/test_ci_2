@@ -33,7 +33,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.HOST_NAME }}
-          password: ${{ secrets.HOST_PASSWORD }}
+          key: ${{ secrets.WINDOWS_KEY }}
+          #password: ${{ secrets.HOST_PASSWORD }}
           script: pwd
 
   test:
