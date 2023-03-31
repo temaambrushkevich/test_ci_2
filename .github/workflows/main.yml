@@ -1,0 +1,20 @@
+name: cicd calc
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build docker
+        run:
+          echo "Build docker..."
+          echo "Build OK"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test calc
+        run:
+          echo "Testing calc..."
+          echo "Test OK"
