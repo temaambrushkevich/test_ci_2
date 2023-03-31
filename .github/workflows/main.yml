@@ -25,13 +25,14 @@ jobs:
   deploy:
     name: remote to host
     needs: build
-    uses: D3rHase/ssh-command-action@v0.2.2
+    uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
     with:
       host: ${{ secrets.HOST }}
       user: ${{ secrets.HOST_NAME }}
-      privat_key: ${{ secrets.HOST_PASSWORD }}
-      command:
-        pwd
+      pass: ${{ secrets.HOST_PASSWORD }}
+      last_ssh: |
+        echo $LASTSSH 
+        ls -la
 
   test:
     needs: deploy
