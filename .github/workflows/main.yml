@@ -23,6 +23,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
   deploy:
+    name: remote to host
     needs: build
     uses: appleboy/ssh-action@v0.1.8
     with:
