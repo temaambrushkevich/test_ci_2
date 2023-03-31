@@ -29,7 +29,7 @@ jobs:
       #- name: build docker
       #  run: |
       #    echo "Build docker..."
-      #   echo "Build OK"
+
   test:
     runs-on: ubuntu-latest
     steps:
