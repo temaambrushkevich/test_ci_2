@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: build docker
-        run:
+        run: |
           echo "Build docker..."
           echo "Build OK"
   test:
     runs-on: ubuntu-latest
     steps:
       - name: test calc
-        run:
+        run: |
           echo "Testing calc..."
           echo "Test OK"
