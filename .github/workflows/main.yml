@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
       # Логинимся в Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -22,7 +24,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: artemambrush/calc_flask:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
 
       #- name: build docker
       #  run: |
