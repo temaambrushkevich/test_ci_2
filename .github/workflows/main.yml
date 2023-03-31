@@ -25,12 +25,13 @@ jobs:
   deploy:
     name: remote to host
     needs: build
-    uses: appleboy/ssh-action@v0.1.8
+    uses: D3rHase/ssh-command-action@v0.2.2
     with:
       host: ${{ secrets.HOST }}
-      username: ${{ secrets.HOST_NAME }}
-      password: ${{ secrets.HOST_PASSWORD }}
-      script: pwd
+      user: ${{ secrets.HOST_NAME }}
+      privat_key: ${{ secrets.HOST_PASSWORD }}
+      command:
+        pwd
 
   test:
     needs: deploy
