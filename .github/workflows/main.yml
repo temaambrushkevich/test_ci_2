@@ -25,9 +25,11 @@ jobs:
   pull:
     needs: build
     runs-on: ubuntu-latest
+    container: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
     steps:
       - name: pulling image on docker hub
         run: echo "pulling..."
+    
 
   test:
     needs: pull
