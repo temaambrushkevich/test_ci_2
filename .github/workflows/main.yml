@@ -54,7 +54,7 @@ jobs:
         with:
           name: out_curl
   stop_containers:
-    needs: tests
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: login in host and stoping docker container
