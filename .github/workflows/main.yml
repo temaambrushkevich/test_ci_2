@@ -22,17 +22,17 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
-  pull:
+  deploy:
     needs: build
-    runs-on: ubuntu-latest
-    container: artemambrush/calc_flask:latest
-    steps:
-      - name: pulling image on docker hub
-        run: echo "pulling..."
-    
+    uses: appleboy/ssh-action@v0.1.8
+    with:
+      host: ${{ secrets.HOST }}
+      username: ${{ secrets.HOST_NAME }}
+      password: ${{ secrets.HOST_PASSWORD }}
+      script: pwd
 
   test:
-    needs: pull
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: test calc
