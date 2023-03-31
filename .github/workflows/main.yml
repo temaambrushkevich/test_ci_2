@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script:
-            "docker run -it -p 5000:5000 artemambrush/calc_flask"
+            "docker run -p 5000:5000 artemambrush/calc_flask"
       - name: Print info
         run: echo "Deployed OK"
 
