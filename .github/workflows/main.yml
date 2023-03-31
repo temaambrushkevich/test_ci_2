@@ -35,17 +35,14 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script:
-            "docker run -d -p 5000:5000 artemambrush/calc_flask"
-      - name: Print info
-        run: echo "Deployed OK"
+            "docker run -d -p 5000:5000 --name ${{ DOCKER_CONTAINER_NAME }} artemambrush/calc_flask"
 
   test:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: test calc
-        run: |
-          echo "Testing calc..."
+        run:
           curl -o output.txt "http://31.184.253.55:5000/calc?arg1=10&arg2=7&operation=mult"
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -56,3 +53,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out_curl
+      - name: login in host and stoping docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          script:
+            "docker stop ${{ DOCKER_CONTAINER_NAME }}"
