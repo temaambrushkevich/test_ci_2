@@ -22,11 +22,24 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
+  
+  sast:
+    name: Bandit Scan
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: scan
+        uses: shundor/bandit-action@v1
+        with: 
+          path: "."
+          #level: high
+          #confidence: high
+          #exit_zero: true    
 
   deploy:
     name: remote to host
     runs-on: ubuntu-22.04
-    needs: build
+    needs: sast
     # подключаемся к серверу(vds) и выполняем команду по запуску контейнера
     steps:
       - name: remote ssh commands using password
@@ -43,7 +56,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       # записываем то, что вывел curl при подключении к нашему калькулятору в файл output.txt
-      - name: run curl command
+      - name: run curl and cat commands
         run: |
           curl -o output.txt "http://${{ secrets.HOST }}:5000/calc?arg1=10&arg2=7&operation=mult"
           cat output.txt
