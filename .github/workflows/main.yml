@@ -70,4 +70,4 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script:
-            "docker stop ${{ secrets.DOCKER_CONTAINER_NAME }}; docker system prune -a; exit"
+            "docker stop ${{ secrets.DOCKER_CONTAINER_NAME }}; docker system prune -a -f; exit"
