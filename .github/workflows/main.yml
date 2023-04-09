@@ -4,8 +4,23 @@ on:
   workflow_dispatch:
 
 jobs:
+  # проверка python кода bandit'ом
+  sast:
+    name: Bandit Scan
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install bandit
+        run:
+          pip install bandit safety
+      - name: scan
+        run:
+          bandit calculator.py -lll
+
   build:
     runs-on: ubuntu-22.04
+    needs: sast
     steps:
       # получаем репозиторий с гитхаба
       - name: Checkout Repo
@@ -23,26 +38,11 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
-  
-  # проверка python кода bandit'ом
-  sast:
-    name: Bandit Scan
-    runs-on: ubuntu-22.04
-    needs: build
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-      - name: Install bandit
-        run:
-          pip install bandit safety
-      - name: scan
-        run:
-          bandit scan "Calculator.py"
 
   deploy:
     name: remote to host
     runs-on: ubuntu-22.04
-    needs: sast
+    needs: build
     # подключаемся к серверу(vds) и выполняем команду по запуску контейнера
     steps:
       - name: remote ssh commands using password
