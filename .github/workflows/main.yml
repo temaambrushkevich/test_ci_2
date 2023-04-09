@@ -19,7 +19,7 @@ jobs:
         # также будет выведена информация об уязвимостях, иначе полный вывод bandit будет записан в файл
         run: |
           bandit "Calculator.py" -lll
-          bandit "Calculator.py" > bandit_output.txt
+          bandit "Calculator.py" -lll > bandit_output.txt
       # загружаем файл bandit_output.txt в качестве артефакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
