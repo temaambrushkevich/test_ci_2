@@ -16,7 +16,7 @@ jobs:
           pip install bandit safety
       - name: scan
         # если будут угрозы уровня "высокий", то bandit вернет код 1 и стадия sast остановится
-        run: 
+        run: |
           bandit "Calculator.py"
           bandit "Calculator.py" > bandit_output.txt
       # загружаем файл bandit_output.txt в качестве артефакта 
