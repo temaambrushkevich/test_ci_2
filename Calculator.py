@@ -1,4 +1,3 @@
-#http://127.0.0.1:5000/calc?arg1=4&arg2=1&operation=mult
 from flask import Flask, request
 
 app = Flask(__name__)

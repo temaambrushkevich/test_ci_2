@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:22.04
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -25,8 +25,9 @@ jobs:
 
   deploy:
     name: remote to host
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:22.04
     needs: build
+    # подключаемся к серверу(vds) и выполняем команду по запуску контейнера
     steps:
       - name: remote ssh commands using password
         uses: appleboy/ssh-action@master
@@ -39,23 +40,28 @@ jobs:
 
   test:
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:22.04
     steps:
-      - name: test calc
+      # записываем то, что вывел curl при подключении к нашему калькулятору в файл output.txt
+      - name: run curl command
         run:
           curl -o output.txt "http://31.184.253.55:5000/calc?arg1=10&arg2=7&operation=mult"
+      # загружаем файл output.txt в качестве артифакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           path: output.txt
           name: out_curl
+      # получаем артифакт
       - name: Get Artifact
         uses: actions/download-artifact@v3
         with:
           name: out_curl
+  
+  # останавливаем контейнер и удаляем его
   stop_containers:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:22.04
     steps:
       - name: login in host and stoping docker container
         uses: appleboy/ssh-action@master
