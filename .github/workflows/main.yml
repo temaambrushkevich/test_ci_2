@@ -88,6 +88,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out_curl
+      # получаем репозиторий
+      - name: Checkout Repo
+        uses: actions/checkout@v3
       # сверяем значение
       - name: aboba
         run: sh analyze.sh
