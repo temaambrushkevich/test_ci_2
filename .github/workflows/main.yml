@@ -16,7 +16,19 @@ jobs:
           pip install bandit safety
       - name: scan
         run:
-          bandit "Calculator.py" -lll
+          # если будут угрозы уровня "высокий", то bandit вернет код 1 и стадия sast остановится
+          bandit "Calculator.py" -lll > bandit_output.txt
+      # загружаем файл bandit_output.txt в качестве артефакта 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: bandit_output.txt
+          name: bandit_output.txt
+      # получаем артефакт
+      - name: Get Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bandit_output.txt
 
   build:
     runs-on: ubuntu-22.04
