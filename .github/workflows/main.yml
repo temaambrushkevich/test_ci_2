@@ -23,18 +23,16 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/calc_flask:latest
   
+  # проверка python кода bandit'ом
   sast:
     name: Bandit Scan
     runs-on: ubuntu-22.04
     needs: build
     steps:
       - name: scan
-        uses: shundor/bandit-action@latest
-        with: 
-          path: "."
-          #level: high
-          #confidence: high
-          #exit_zero: true    
+        run: |
+          pip install bandit safety
+          bandit scan Calculator.py
 
   deploy:
     name: remote to host
