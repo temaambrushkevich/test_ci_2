@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -25,7 +25,7 @@ jobs:
 
   deploy:
     name: remote to host
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
     needs: build
     # подключаемся к серверу(vds) и выполняем команду по запуску контейнера
     steps:
@@ -40,7 +40,7 @@ jobs:
 
   test:
     needs: deploy
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
     steps:
       # записываем то, что вывел curl при подключении к нашему калькулятору в файл output.txt
       - name: run curl command
@@ -61,7 +61,7 @@ jobs:
   # останавливаем контейнер и удаляем его
   stop_containers:
     needs: test
-    runs-on: ubuntu:22.04
+    runs-on: ubuntu-22.04
     steps:
       - name: login in host and stoping docker container
         uses: appleboy/ssh-action@master
