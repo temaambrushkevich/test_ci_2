@@ -88,6 +88,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out_curl
+      # сверяем значение
+      - name: aboba
+        run: sh analyze.sh
   
   # останавливаем контейнер и удаляем его
   stop_containers:
