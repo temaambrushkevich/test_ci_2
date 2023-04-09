@@ -72,11 +72,15 @@ jobs:
     needs: deploy
     runs-on: ubuntu-22.04
     steps:
+      # получаем репозиторий
+      - name: Checkout Repo
+        uses: actions/checkout@v3
       # записываем то, что вывел curl при подключении к нашему калькулятору в файл output.txt
       - name: run curl and cat commands
         run: |
           curl -o output.txt "http://${{ secrets.HOST }}:5000/calc?arg1=10&arg2=7&operation=mult"
           cat output.txt
+          sh analyze.sh
       # загружаем файл output.txt в качестве артефакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -88,12 +92,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: out_curl
-      # получаем репозиторий
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-      # сверяем значение
-      - name: aboba
-        run: sh analyze.sh
   
   # останавливаем контейнер и удаляем его
   stop_containers:

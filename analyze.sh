@@ -1,6 +1,5 @@
-RESULT=`tr -d '\0' < output.txt`
+RESULT=$(cat output.txt)
 TRUERES="70.0"
-echo $RESULT
 
 if [ "$RESULT" == "$TRUERES" ]; then
     echo "yes"
