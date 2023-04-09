@@ -17,7 +17,7 @@ jobs:
       - name: scan
         run:
           # если будут угрозы уровня "высокий", то bandit вернет код 1 и стадия sast остановится
-          bandit "Calculator.py" -lll > bandit_output.txt
+          bandit "Calculator.py" > bandit_output.txt
       # загружаем файл bandit_output.txt в качестве артефакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
