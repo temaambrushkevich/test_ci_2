@@ -44,8 +44,9 @@ jobs:
     steps:
       # записываем то, что вывел curl при подключении к нашему калькулятору в файл output.txt
       - name: run curl command
-        run:
+        run: |
           curl -o output.txt "http://${{ secrets.HOST }}:5000/calc?arg1=10&arg2=7&operation=mult"
+          cat output.txt
       # загружаем файл output.txt в качестве артефакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
