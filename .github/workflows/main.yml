@@ -20,7 +20,7 @@ jobs:
         run:
           bandit "Calculator.py" -lll;
       - name: scan 2
-        run: bandit "Calculator.py" > bandit_output.txt
+        run: bandit "Calculator.py" &> bandit_output.txt
       # загружаем файл bandit_output.txt в качестве артефакта 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
