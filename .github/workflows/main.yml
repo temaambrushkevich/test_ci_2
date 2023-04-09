@@ -16,7 +16,7 @@ jobs:
           pip install bandit safety
       - name: scan
         run:
-          bandit calculator.py -lll
+          bandit "Calculator.py" -lll
 
   build:
     runs-on: ubuntu-22.04
